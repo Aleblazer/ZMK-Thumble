@@ -1,5 +1,8 @@
 if SHIELD_THUMBLE
 
+config ZMK_KEYBOARD_NAME
+    default "Thumble"
+
 config ZMK_POINTING
     default y
 
