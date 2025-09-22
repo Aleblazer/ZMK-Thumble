@@ -1,0 +1,12 @@
+file_format: "1"
+id: thumble
+name: Thumble
+type: shield
+url: https://github.com/aleblazer/thumble
+requires: [pro_micro]
+exposes: [i2c_oled]
+features:
+  - keys
+  - display
+siblings:
+  - thumble

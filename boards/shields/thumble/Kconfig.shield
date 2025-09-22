@@ -1,0 +1,2 @@
+config SHIELD_THUMBLE
+    def_bool $(shields_list_contains,thumble)
