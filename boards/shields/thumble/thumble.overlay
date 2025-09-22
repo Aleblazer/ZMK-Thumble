@@ -1,5 +1,5 @@
 #include <dt-bindings/zmk/matrix_transform.h>
-#include "zodify-layouts.dtsi"
+#include "thumble-layouts.dtsi"
 
 &thumble_physical_layout {
     transform = <&default_transform>;
