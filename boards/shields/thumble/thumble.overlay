@@ -1,6 +1,5 @@
 #include <dt-bindings/zmk/matrix_transform.h>
 #include "thumble-layouts.dtsi"
-#include "thumble_i2c.overlay"
 
 &thumble_physical_layout {
     transform = <&default_transform>;
@@ -60,7 +59,7 @@ RC(4,0) RC(4,1) RC(4,2) RC(4,3) RC(4,4) RC(3,5) RC(4,5) RC(4,7) RC(3,7) RC(4,8) 
         status = "okay";
         device = <&glidepoint>;
         };
-        
+
 &pro_micro_i2c {
     status = "okay";
     
