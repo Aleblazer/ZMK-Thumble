@@ -53,15 +53,7 @@ RC(3,0) RC(3,1) RC(3,2) RC(3,3) RC(3,4) RC(2,5) RC(2,6) RC(3,6) RC(2,7) RC(3,8) 
 RC(4,0) RC(4,1) RC(4,2) RC(4,3) RC(4,4) RC(3,5) RC(4,5) RC(4,7) RC(3,7) RC(4,8) RC(4,9) RC(4,10) RC(4,11) RC(4,12)
         >;
     };
-};
-{
-    glidepoint_listener: glidepoint_listener {
-        compatible = "zmk,input-listener";
-        status = "okay";
-        device = <&glidepoint>;
-        };
-
-&pro_micro_i2c {
+    &pro_micro_i2c {
     status = "okay";
     
     glidepoint: glidepoint@2a {
@@ -75,5 +67,13 @@ RC(4,0) RC(4,1) RC(4,2) RC(4,3) RC(4,4) RC(3,5) RC(4,5) RC(4,7) RC(3,7) RC(4,8) 
         no-taps;
     };
 };
-
 };
+
+
+/ {
+    glidepoint_listener: glidepoint_listener {
+        compatible = "zmk,input-listener";
+        status = "okay";
+        device = <&glidepoint>;
+        };
+    };
