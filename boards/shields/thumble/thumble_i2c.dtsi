@@ -12,8 +12,8 @@
         sensitivity = "4x";
         no-taps;
         x-invert;
-        x-axis-z-min = "1";
-        y-axis-z-min = "1";
+        x-axis-z-min = <1>;
+        y-axis-z-min = <1>;
     };
 };
 
