@@ -9,11 +9,9 @@
         reg = <0x2a>;
         status = "okay";
         dr-gpios = <&gpio1 1 (GPIO_ACTIVE_HIGH)>;
-        sensitivity = "4x";
+        sensitivity = "1x";
         no-taps;
         x-invert;
-        x-axis-z-min = <1>;
-        y-axis-z-min = <1>;
     };
 };
 
