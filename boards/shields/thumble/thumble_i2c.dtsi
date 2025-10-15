@@ -13,10 +13,8 @@
     };
 };
 
-/ {
-    &glidepoint_listener{
+&glidepoint_listener{
         compatible = "zmk,input-listener";
         status = "okay";
         device = <&glidepoint>;
         };
-    };
