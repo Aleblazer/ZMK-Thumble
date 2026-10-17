@@ -64,10 +64,14 @@
         bottom-beta = <5>;
         stationary-threshold = <5>;
 
-        /* orientation: uncomment as needed once you see how it tracks */
+        /*
+         * orientation: as mounted, finger right moved the cursor down and
+         * finger down moved it right (axes transposed), so swap X/Y. If one
+         * direction ends up reversed, add flip-x or flip-y.
+         */
         // flip-x;
         // flip-y;
-        // switch-xy;
+        switch-xy;
     };
 };
 
