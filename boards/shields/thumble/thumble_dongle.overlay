@@ -4,6 +4,7 @@
  * ZMK Studio can edit them; the display is wired up by prospector_adapter.
  */
 
+#include <input/processors.dtsi>
 #include "thumble.dtsi"
 
 /*
@@ -25,5 +26,13 @@
     trackpad_listener {
         compatible = "zmk,input-listener";
         device = <&trackpad_split>;
+        /*
+         * Pointer sensitivity: multiply movement by 3/2 (1.5x). Applied here on
+         * the dongle, after the BLE link, so it adds no radio traffic; the
+         * scaler carries fractional remainders between reports, so slow
+         * movement isn't lost. Raise the first number (or lower the second)
+         * for faster, e.g. <&zip_xy_scaler 2 1> = 2x; <1 1> = stock.
+         */
+        input-processors = <&zip_xy_scaler 3 2>;
     };
 };
