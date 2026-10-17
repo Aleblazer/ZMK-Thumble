@@ -9,6 +9,15 @@
  */
 
 &pro_micro_i2c {
+    /*
+     * The nice!nano defaults i2c0 to the legacy TWI driver, which splits the
+     * IQS5xx's register reads (16-bit address write, repeated START, read)
+     * into two separate transfers; with the IQS5xx clock-stretching in
+     * between, every read failed with -EIO while plain writes worked. TWIM
+     * does write->repeated START->read as one EasyDMA transfer. The board's
+     * pinctrl already uses the TWIM_SDA/TWIM_SCL functions.
+     */
+    compatible = "nordic,nrf-twim";
     status = "okay";
 
     trackpad: iqs5xx@74 {

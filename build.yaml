@@ -11,6 +11,7 @@ include:
   - board: nice_nano//zmk
     shield: thumble
     snippet: zmk-usb-logging
+    cmake-args: -DCONFIG_I2C_LOG_LEVEL_DBG=y
     artifact-name: thumble_usb_logging
   # Dongle: Xiao nRF52840 + Prospector adapter (ILI9341), ZMK Studio over USB
   - board: xiao_ble//zmk
