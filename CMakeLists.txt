@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: MIT
 
-if(CONFIG_THUMBLE_I2C_PROBE OR CONFIG_THUMBLE_IQS5XX_TUNE)
+if(CONFIG_THUMBLE_I2C_PROBE)
   zephyr_library()
-  zephyr_library_sources_ifdef(CONFIG_THUMBLE_I2C_PROBE src/i2c_probe.c)
-  zephyr_library_sources_ifdef(CONFIG_THUMBLE_IQS5XX_TUNE src/iqs5xx_tune.c)
+  zephyr_library_sources(src/i2c_probe.c)
 endif()

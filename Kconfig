@@ -8,23 +8,3 @@ config THUMBLE_I2C_PROBE
       log every address that ACKs, the RDY pin level, and the IQS5xx
       product/project/version registers read at 0x74. Only for the USB
       logging build.
-
-config THUMBLE_IQS5XX_TUNE
-    bool "Apply extra IQS5xx trackpad settings after the driver's init"
-    default y
-    depends on DT_HAS_AZOTEQ_IQS5XX_ENABLED && I2C
-    help
-      Sets the TPS65's active and idle-touch report rates, which the
-      community driver leaves at the pad's 13 ms / 50 ms defaults.
-
-if THUMBLE_IQS5XX_TUNE
-
-config THUMBLE_IQS5XX_REPORT_RATE_MS
-    int "Active and idle-touch report rate (ms)"
-    default 10
-    range 4 50
-    help
-      Lower is smoother but uses more power while a finger is on the pad.
-      QMK uses 10 ms. Idle and low-power rates are left at the pad defaults.
-
-endif
