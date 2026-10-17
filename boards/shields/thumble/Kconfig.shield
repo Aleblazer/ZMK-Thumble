@@ -3,6 +3,3 @@ config SHIELD_THUMBLE
 
 config SHIELD_THUMBLE_DONGLE
     def_bool $(shields_list_contains,thumble_dongle)
-
-config SHIELD_THUMBLE_I2C_SWAP
-    def_bool $(shields_list_contains,thumble_i2c_swap)

@@ -6,16 +6,32 @@
  * nice!nano, so RDY is bodge-wired to P1.01 (the wire the Cirque DR used).
  * RST is not connected; the driver skips the reset pulse when reset-gpios is
  * absent. RDY is mandatory: the driver only reads the pad when RDY rises.
+ *
+ * The TPS65's cable/breakout crosses SDA and SCL relative to the VIK pinout
+ * (confirmed on hardware: the pad only ACKs at 0x74 with the lines swapped),
+ * so the swap is done here in firmware: SDA on P0.20, SCL on P0.17.
  */
+
+&i2c0_default {
+    group1 {
+        psels = <NRF_PSEL(TWIM_SDA, 0, 20)>,
+                <NRF_PSEL(TWIM_SCL, 0, 17)>;
+    };
+};
+
+&i2c0_sleep {
+    group1 {
+        psels = <NRF_PSEL(TWIM_SDA, 0, 20)>,
+                <NRF_PSEL(TWIM_SCL, 0, 17)>;
+    };
+};
 
 &pro_micro_i2c {
     /*
-     * The nice!nano defaults i2c0 to the legacy TWI driver, which splits the
+     * The nice!nano defaults i2c0 to the legacy TWI driver; TWIM does the
      * IQS5xx's register reads (16-bit address write, repeated START, read)
-     * into two separate transfers; with the IQS5xx clock-stretching in
-     * between, every read failed with -EIO while plain writes worked. TWIM
-     * does write->repeated START->read as one EasyDMA transfer. The board's
-     * pinctrl already uses the TWIM_SDA/TWIM_SCL functions.
+     * as one EasyDMA transfer. The board's pinctrl already uses the
+     * TWIM_SDA/TWIM_SCL functions.
      */
     compatible = "nordic,nrf-twim";
     status = "okay";

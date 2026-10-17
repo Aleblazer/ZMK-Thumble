@@ -13,14 +13,6 @@ include:
     snippet: zmk-usb-logging
     cmake-args: -DCONFIG_I2C_LOG_LEVEL_DBG=y -DCONFIG_THUMBLE_I2C_PROBE=y
     artifact-name: thumble_usb_logging
-  # Diagnostic: same as above with SDA/SCL swapped in firmware. If this one
-  # finds the pad at 0x74 and the normal build doesn't, the TPS65 cable or
-  # breakout crosses SDA/SCL.
-  - board: nice_nano//zmk
-    shield: thumble thumble_i2c_swap
-    snippet: zmk-usb-logging
-    cmake-args: -DCONFIG_I2C_LOG_LEVEL_DBG=y -DCONFIG_THUMBLE_I2C_PROBE=y
-    artifact-name: thumble_usb_logging_i2c_swap
   # Dongle: Xiao nRF52840 + Prospector adapter (ILI9341), ZMK Studio over USB
   - board: xiao_ble//zmk
     shield: thumble_dongle prospector_adapter

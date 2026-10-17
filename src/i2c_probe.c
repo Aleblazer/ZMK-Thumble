@@ -53,6 +53,33 @@ static void probe_work_handler(struct k_work *work) {
         LOG_ERR("IQS5xx @0x%02x ID read failed: %d", IQS5XX_ADDR, ret);
     }
 
+    /*
+     * System config 0/1 (0x058E/0x058F): the driver writes SETUP_COMPLETE|WDT
+     * (0x60) and EVENT_MODE|GESTURE_EVENT|TP_EVENT (0x07). Anything else means
+     * its setup didn't land (e.g. the pad reset after init and lost it).
+     */
+    uint8_t cfg_reg[2] = {0x05, 0x8E};
+    uint8_t cfg[2];
+    ret = i2c_write_read(bus, IQS5XX_ADDR, cfg_reg, sizeof(cfg_reg), cfg, sizeof(cfg));
+    if (ret == 0) {
+        LOG_INF("IQS5xx sys config 0 = 0x%02x (want 0x60), sys config 1 = 0x%02x (want 0x07)",
+                cfg[0], cfg[1]);
+    } else {
+        LOG_ERR("IQS5xx sys config read failed: %d", ret);
+    }
+
+    /* Report rates in ms (0x057A..): active, idle touch, idle, LP1, LP2 */
+    uint8_t rr_reg[2] = {0x05, 0x7A};
+    uint8_t rr[10];
+    ret = i2c_write_read(bus, IQS5XX_ADDR, rr_reg, sizeof(rr_reg), rr, sizeof(rr));
+    if (ret == 0) {
+        LOG_INF("IQS5xx report rates (ms): active %u, idle touch %u, idle %u, LP1 %u, LP2 %u",
+                (rr[0] << 8) | rr[1], (rr[2] << 8) | rr[3], (rr[4] << 8) | rr[5],
+                (rr[6] << 8) | rr[7], (rr[8] << 8) | rr[9]);
+    } else {
+        LOG_ERR("IQS5xx report rate read failed: %d", ret);
+    }
+
     /* Close the communication window the reads opened. */
     uint8_t end_comm[3] = {0xEE, 0xEE, 0x00};
     i2c_write(bus, end_comm, sizeof(end_comm), IQS5XX_ADDR);
