@@ -49,11 +49,16 @@
         status = "okay";
         rdy-gpios = <&gpio1 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
 
-        /* gestures */
-        one-finger-tap;
+        /*
+         * gestures: there's a physical click button under the pad, so no
+         * left-click from touch: one-finger tap is off, and so is
+         * press-and-hold (it holds left-click after a 250 ms rest, which
+         * would fire while resting a finger to press the button).
+         */
+        // one-finger-tap;
         two-finger-tap;
-        press-and-hold;
-        press-and-hold-time = <250>;
+        // press-and-hold;
+        // press-and-hold-time = <250>;
         scroll;
         natural-scroll-y;
 
