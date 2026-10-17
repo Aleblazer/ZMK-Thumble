@@ -1,19 +1,37 @@
-if SHIELD_THUMBLE
+if SHIELD_THUMBLE || SHIELD_THUMBLE_DONGLE
 
 config ZMK_KEYBOARD_NAME
     default "Thumble"
 
+# Keyboard is a split peripheral, the Prospector dongle is the central.
+config ZMK_SPLIT
+    default y
+
 config ZMK_POINTING
     default y
-    
+
+endif
+
+# Keyboard: split peripheral with the TPS65 on I2C
+if SHIELD_THUMBLE
+
 config I2C
     default y
 
-if ZMK_DISPLAY
-
-config SSD1306
+config INPUT
     default y
 
-endif # ZMK_DISPLAY
+endif
+
+# Dongle: BLE central for the single Thumble peripheral
+if SHIELD_THUMBLE_DONGLE
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+
+# The central must run the input subsystem to dispatch the trackpad events
+# received over the split link to its input-listener.
+config INPUT
+    default y
 
 endif

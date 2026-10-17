@@ -1,17 +1,25 @@
 manifest:
   remotes:
-  - name: zmkfirmware
-    url-base: https://github.com/zmkfirmware
-    # Additional modules containing boards/shields/custom code can be listed here as well
-    # See https://docs.zephyrproject.org/3.2.0/develop/west/manifest.html#projects
+    - name: zmkfirmware
+      url-base: https://github.com/zmkfirmware
+    - name: aym1607
+      url-base: https://github.com/AYM1607
+    - name: aleblazer
+      url-base: https://github.com/Aleblazer
   projects:
-  - name: zmk
-    remote: zmkfirmware
-    revision: main
-    import: app/west.yml
-  - name: cirque-input-module
-    url: https://github.com/petejohanson/cirque-input-module
-    revision: main
-    path: modules/cirque-input-module
+    - name: zmk
+      remote: zmkfirmware
+      revision: main
+      import: app/west.yml
+    # Community Azoteq IQS5xx driver (TPS43 / TPS65). Pinned so the module
+    # cache can't serve a different revision.
+    - name: zmk-driver-azoteq-iqs5xx
+      remote: aym1607
+      revision: 27321f0232b50f0af31eb27ff97d539933467ea4
+    # Prospector status screens ported to the ILI9341 320x240 panel
+    # (feat/ili9341-port, pinned).
+    - name: prospector-zmk-module
+      remote: aleblazer
+      revision: 6837847bbeeca7548b193e2efdfa6ca0796138a7
   self:
     path: config

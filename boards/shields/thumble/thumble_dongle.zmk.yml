@@ -1,0 +1,12 @@
+file_format: "1"
+id: thumble_dongle
+name: Thumble Dongle
+type: shield
+url: https://github.com/aleblazer/thumble
+requires: [seeed_xiao]
+features:
+  - studio
+  - pointer
+siblings:
+  - thumble
+  - thumble_dongle

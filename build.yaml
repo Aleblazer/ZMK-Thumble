@@ -1,27 +1,26 @@
 # This file generates the GitHub Actions matrix.
-# For simple board + shield combinations, add them to the top level board and
-# shield arrays, for more control, add individual board + shield combinations
-# to the `include` property. You can also use the `cmake-args` property to
-# pass flags to the build command, `snippet` to add a Zephyr snippet, and
-# `artifact-name` to assign a name to distinguish build outputs from each other:
-#
-# board: [ "nice_nano_v2" ]
-# shield: [ "corne_left", "corne_right" ]
-# include:
-#   - board: bdn9_rev2
-#   - board: nice_nano_v2
-#     shield: reviung41
-#   - board: nice_nano_v2
-#     shield: corne_left
-#     snippet: studio-rpc-usb-uart
-#     cmake-args: -DCONFIG_ZMK_STUDIO=y
-#     artifact-name: corne_left_with_studio
-#
+# See https://zmk.dev/docs/user-setup#customizing-zmk for the format.
+---
 include:
-  - board: nice_nano_v2
+  # Keyboard: split peripheral (keys + TPS65 trackpad) on nice!nano
+  - board: nice_nano//zmk
     shield: thumble
+    artifact-name: thumble
+  # Same keyboard firmware with USB logging, for trackpad bring-up. Plug the
+  # keyboard into USB and open its serial port to see the iqs5xx driver logs.
+  - board: nice_nano//zmk
+    shield: thumble
+    snippet: zmk-usb-logging
+    artifact-name: thumble_usb_logging
+  # Dongle: Xiao nRF52840 + Prospector adapter (ILI9341), ZMK Studio over USB
+  - board: xiao_ble//zmk
+    shield: thumble_dongle prospector_adapter
     snippet: studio-rpc-usb-uart
-#    snippet: zmk-usb-logging
-    cmake-args: -DCONFIG_ZMK_STUDIO=y
-  - board: nice_nano_v2
+    artifact-name: thumble_dongle
+  # Settings wipe images, one per MCU. Flash, wait ~5s, then re-flash.
+  - board: nice_nano//zmk
     shield: settings_reset
+    artifact-name: settings_reset_nice_nano
+  - board: xiao_ble//zmk
+    shield: settings_reset
+    artifact-name: settings_reset_xiao

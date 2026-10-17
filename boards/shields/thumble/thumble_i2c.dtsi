@@ -1,30 +1,55 @@
-#include <dt-bindings/zmk/input_transform.h>
-#include <input/processors.dtsi>
+/*
+ * Azoteq TPS65 trackpad (IQS550, driven by the community azoteq,iqs5xx driver).
+ *
+ * Wiring on the Thumble: SDA/SCL/3V3/GND come through the VIK connector (the
+ * PCB has 3v3 pull-ups R1/R2). The VIK GP pins are NOT routed to the
+ * nice!nano, so RDY is bodge-wired to P1.01 (the wire the Cirque DR used).
+ * RST is not connected; the driver skips the reset pulse when reset-gpios is
+ * absent. RDY is mandatory: the driver only reads the pad when RDY rises.
+ */
 
 &pro_micro_i2c {
     status = "okay";
-    
-    glidepoint: glidepoint@2a {
-        compatible = "cirque,pinnacle";
-        reg = <0x2a>;
+
+    trackpad: iqs5xx@74 {
+        compatible = "azoteq,iqs5xx";
+        reg = <0x74>;
         status = "okay";
-        dr-gpios = <&gpio1 1 (GPIO_ACTIVE_HIGH)>;
-        sleep;
-        sensitivity = "1x";
-        no-taps;
-        x-invert;
+        rdy-gpios = <&gpio1 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+
+        /* gestures */
+        one-finger-tap;
+        two-finger-tap;
+        press-and-hold;
+        press-and-hold-time = <250>;
+        scroll;
+        natural-scroll-y;
+
+        /* tuning */
+        bottom-beta = <5>;
+        stationary-threshold = <5>;
+
+        /* orientation: uncomment as needed once you see how it tracks */
+        // flip-x;
+        // flip-y;
+        // switch-xy;
     };
 };
 
-
-&glidepoint {
-	status = "okay";
-};
-
+/*
+ * Forward trackpad input over the split link. The dongle declares the
+ * matching endpoint (same reg) plus the input-listener; a listener must NOT
+ * also live here, or the peripheral would try to act as a mouse itself.
+ */
 / {
-glidepoint_listener{
-        compatible = "zmk,input-listener";
-        status = "okay";
-        device = <&glidepoint>;
+    split_inputs {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        trackpad_split: trackpad_split@0 {
+            compatible = "zmk,input-split";
+            reg = <0>;
+            device = <&trackpad>;
         };
     };
+};

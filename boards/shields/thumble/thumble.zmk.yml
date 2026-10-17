@@ -4,11 +4,9 @@ name: Thumble
 type: shield
 url: https://github.com/aleblazer/thumble
 requires: [pro_micro]
-exposes: [i2c_oled]
 features:
   - keys
-  - display
-  - studio
   - pointer
 siblings:
   - thumble
+  - thumble_dongle
