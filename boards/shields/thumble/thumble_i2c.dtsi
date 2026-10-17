@@ -58,16 +58,11 @@
         natural-scroll-y;
 
         /*
-         * Slow-speed tuning (was 5 / 5):
-         * - bottom-beta: filtering at slow speeds, 0 = most smoothing (laggy),
-         *   255 = none (jittery). Raised so slow motion isn't dragged behind
-         *   the finger; drop back toward 5 if the cursor gets shaky.
-         * - stationary-threshold: movement (pad pixels) below which the finger
-         *   counts as stationary and no motion is reported. Lowered so small,
-         *   slow movements register instead of stair-stepping.
+         * tuning: 10 / 2 was tried for slow-speed accuracy and felt floaty on
+         * hardware, so these stay at 5 / 5.
          */
-        bottom-beta = <10>;
-        stationary-threshold = <2>;
+        bottom-beta = <5>;
+        stationary-threshold = <5>;
 
         /* orientation: uncomment as needed once you see how it tracks */
         // flip-x;

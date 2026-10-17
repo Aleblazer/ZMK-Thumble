@@ -8,3 +8,30 @@ config THUMBLE_I2C_PROBE
       log every address that ACKs, the RDY pin level, and the IQS5xx
       product/project/version registers read at 0x74. Only for the USB
       logging build.
+
+config THUMBLE_IQS5XX_RESOLUTION
+    bool "Set the TPS65 X/Y output resolution at boot"
+    default y
+    depends on DT_HAS_AZOTEQ_IQS5XX_ENABLED && I2C
+    help
+      Writes the IQS5xx X/Y resolution registers, which the community driver
+      leaves at the pad's factory value. Higher = more counts per mm of finger
+      travel: more sensitive, with finer slow-speed steps.
+
+if THUMBLE_IQS5XX_RESOLUTION
+
+config THUMBLE_IQS5XX_RESOLUTION_X
+    int "X resolution (pad pixels across the full width)"
+    default 3072
+    range 64 3584
+    help
+      3072 is QMK's maximum for the 65 mm wide TPS65.
+
+config THUMBLE_IQS5XX_RESOLUTION_Y
+    int "Y resolution (pad pixels across the full height)"
+    default 2048
+    range 64 2304
+    help
+      2048 is QMK's maximum for the 49 mm tall TPS65.
+
+endif

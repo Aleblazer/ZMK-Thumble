@@ -80,6 +80,16 @@ static void probe_work_handler(struct k_work *work) {
         LOG_ERR("IQS5xx report rate read failed: %d", ret);
     }
 
+    /* X/Y output resolution (0x066E, 0x0670) */
+    uint8_t res_reg[2] = {0x06, 0x6E};
+    uint8_t res[4];
+    ret = i2c_write_read(bus, IQS5XX_ADDR, res_reg, sizeof(res_reg), res, sizeof(res));
+    if (ret == 0) {
+        LOG_INF("IQS5xx resolution: %u x %u", (res[0] << 8) | res[1], (res[2] << 8) | res[3]);
+    } else {
+        LOG_ERR("IQS5xx resolution read failed: %d", ret);
+    }
+
     /* Close the communication window the reads opened. */
     uint8_t end_comm[3] = {0xEE, 0xEE, 0x00};
     i2c_write(bus, end_comm, sizeof(end_comm), IQS5XX_ADDR);
