@@ -34,6 +34,13 @@
      * TWIM_SDA/TWIM_SCL functions.
      */
     compatible = "nordic,nrf-twim";
+    /*
+     * 100 kHz instead of the board's 400 kHz: at 400 kHz the nRF52840 TWIM's
+     * SCL low time is marginal (anomaly 219), and through the TPS65 cable
+     * reads intermittently failed with -EIO. A full IQS5xx report is a handful
+     * of short transfers, well inside the 13 ms active report period at 100k.
+     */
+    clock-frequency = <100000>;
     status = "okay";
 
     trackpad: iqs5xx@74 {
