@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: MIT
+
+config THUMBLE_I2C_PROBE
+    bool "Periodically log an I2C bus scan and the IQS5xx product number"
+    depends on I2C && GPIO
+    help
+      Bring-up aid for the TPS65: every 10 s, scan the trackpad's I2C bus,
+      log every address that ACKs, the RDY pin level, and the IQS5xx
+      product/project/version registers read at 0x74. Only for the USB
+      logging build.
